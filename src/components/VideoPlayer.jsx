@@ -7,19 +7,19 @@ import {
 } from "react-icons/bs";
 import { AiOutlineSound } from "react-icons/ai";
 import { RiFullscreenFill } from "react-icons/ri";
-import { ImLoop, ImShuffle } from "react-icons/im";
+import { ImLoop } from "react-icons/im";
 import videoData from "../videoData";
 
 const VideoPlayer = ({ videoIndex, onPrevious, onNext }) => {
   const [playerState, setPlayerState] = useState({
     isPlaying: false,
     isMuted: false,
-    speed: 1,
+    speed: 1, //for video speed like 0.5x,2x etc.
     sound: 100,
     isFullScreen: false,
     isLoop: false,
   });
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(0); //these are used for dynamic time passed for the video and setting the duration of the video.
   const [duration, setDuration] = useState(0);
   const videoRef = useRef(null);
   const videoContainerRef = useRef(null);
@@ -28,26 +28,28 @@ const VideoPlayer = ({ videoIndex, onPrevious, onNext }) => {
     const video = videoRef.current;
 
     function handleTime() {
-      setTime(video.currentTime);
+      //the time passed of a video
+      setTime(video.currentTime); //property from HTML video element
     }
 
     function handleDuration() {
+      //the total duration of the video
       setDuration(video.duration);
     }
 
-    video.addEventListener("timeupdate", handleTime);
-    video.addEventListener("loadedmetadata", handleDuration);
+    video.addEventListener("timeupdate", handleTime); //it is an event which is fired when the time indicated by currentTime is updated
+    video.addEventListener("loadedmetadata", handleDuration); //when metadata for specified audio/video is loaded such as duration.
 
     return () => {
-      video.removeEventListener("timeupdate", handleTime);
+      video.removeEventListener("timeupdate", handleTime); //it tidy up our code before component unmounts
       video.removeEventListener("loadedmetadata", handleDuration);
     };
-  }, [videoIndex]);
+  }, [videoIndex]); // index of a particular video in an array of videos
 
   const formatTime = (time) => {
-    const minutes = Math.floor(time / 60)
+    const minutes = Math.floor(time / 60) //time=currentTime in seconds.
       .toString()
-      .padStart(2, "0");
+      .padStart(2, "0"); //padStart pads '0' in the start of our string till it reaches length 2.
     const seconds = Math.floor(time % 60)
       .toString()
       .padStart(2, "0");
@@ -97,7 +99,7 @@ const VideoPlayer = ({ videoIndex, onPrevious, onNext }) => {
           ref={videoRef}
           src={currentVideo.link}
           width="70%"
-          loop={playerState.isLoop}
+          loop={playerState.isLoop} //loop attribute which stores either true or false of loop condition.
           className="shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px] group-hover:shadow-[inset_0_-2px_4px_rgba(0,0,0,0.6)]"
         ></video>
 
