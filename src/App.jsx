@@ -18,7 +18,7 @@ const App = () => {
 
   return (
     <div className="bg-pale-yellow h-full w-screen">
-      <NavBar />
+      {/* <NavBar /> */}
       <VideoPlayer
         onPrevious={handleBackward}
         onNext={handleForward}

@@ -93,7 +93,7 @@ const VideoPlayer = ({ videoIndex, onPrevious, onNext }) => {
     <div className="flex h-screen justify-center items-center">
       <div
         ref={videoContainerRef}
-        className="flex justify-center w-full max-w-700 relative group items-center"
+        className="flex justify-center w-full relative group items-center"
       >
         <video
           ref={videoRef}
